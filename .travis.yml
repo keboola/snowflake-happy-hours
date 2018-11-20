@@ -6,9 +6,9 @@ services:
   - docker
 
 before_script:
-  - export APP_IMAGE=keboola-component
+  - export APP_IMAGE=keboola/snowflake-happy-hours
   - docker -v
-  - docker build -t $APP_IMAGE .
+  - docker build -t $APP_IMAGE . --build-arg AWS_SECRET_ACCESS_KEY --build-arg AWS_ACCESS_KEY_ID .
   - docker run $APP_IMAGE composer ci
 
   # push test image to ECR
