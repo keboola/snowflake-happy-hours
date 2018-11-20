@@ -1,7 +1,8 @@
 {
     "require": {
         "php": "^7.1",
-        "keboola/php-component": "^5.0"
+        "keboola/php-component": "^5.0",
+        "keboola/php-csv-db-import": "^4.1"
     },
     "require-dev": {
         "jakub-onderka/php-parallel-lint": "^1.0",
@@ -14,21 +15,19 @@
     },
     "autoload": {
         "psr-4": {
-            "MyComponent\\": "src/"
+            "Keboola\\SnowflakeHappyHours\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "MyComponent\\Tests\\": "tests/phpunit/",
-            "MyComponent\\FunctionalTests\\": "tests/functional/"
+            "Keboola\\SnowflakeHappyHours\\Tests\\": "tests/phpunit/",
+            "Keboola\\SnowflakeHappyHours\\FunctionalTests\\": "tests/functional/"
         }
     },
     "scripts": {
         "tests-phpunit": "phpunit",
-        "tests-datadir": "phpunit tests/functional",
         "tests": [
-            "@tests-phpunit",
-            "@tests-datadir"
+            "@tests-phpunit"
         ],
 
         "phpstan": "phpstan analyse ./src ./tests --level=max --no-progress -c phpstan.neon",
