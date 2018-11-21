@@ -43,7 +43,7 @@ class ConfigDefinition extends BaseConfigDefinition
                     ->isRequired()
                     ->min(3)
                 ->end()
-                ->integerNode('max_concurency_level')
+                ->integerNode('max_concurrency_level')
                     ->isRequired()
                     ->min(4)->max(12)
                 ->end()

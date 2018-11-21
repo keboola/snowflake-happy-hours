@@ -4,46 +4,19 @@ declare(strict_types=1);
 
 namespace Keboola\SnowflakeHappyHours\Command;
 
+use Keboola\SnowflakeHappyHours\Config;
+
 class AlterWarehouse
 {
     /**
-     * @var int
+     * @var Config
      */
-    private $minClusterSize;
-
-    /**
-     * @var int
-     */
-    private $maxClusterSize;
-
-    /**
-     * @var int
-     */
-    private $maxConcurencyLevel;
-
-    /**
-     * @var string
-     */
-    private $warehouseSize;
-
-    /**
-     * @var string
-     */
-    private $warehouse;
+    private $config;
 
 
-    public function __construct(
-        string $warehouse,
-        int $minClusterSize,
-        int $maxClusterSize,
-        int $maxConcurencyLevel,
-        string $warehouseSize
-    ) {
-        $this->warehouse = $warehouse;
-        $this->minClusterSize = $minClusterSize;
-        $this->maxClusterSize = $maxClusterSize;
-        $this->maxConcurencyLevel = $maxConcurencyLevel;
-        $this->warehouseSize = $warehouseSize;
+    public function __construct(Config $config)
+    {
+        $this->config = $config;
     }
 
     public function getSQL(): string
@@ -54,11 +27,11 @@ WAREHOUSE_SIZE = '%s'
 MIN_CLUSTER_COUNT = %s
 MAX_CLUSTER_COUNT = %s
 MAX_CONCURRENCY_LEVEL = %s;",
-            $this->warehouse,
-            $this->warehouseSize,
-            $this->minClusterSize,
-            $this->maxClusterSize,
-            $this->maxConcurencyLevel
+            $this->config->getWarehouse(),
+            $this->config->getWarehouseSize(),
+            $this->config->getMinClusterCount(),
+            $this->config->getMaxClusterCount(),
+            $this->config->getMaxConcurrencyLevel()
         );
     }
 }

@@ -37,9 +37,9 @@ class Config extends BaseConfig
         return $this->getValue(['parameters', 'max_cluster_count']);
     }
 
-    public function getMaxConcurencyLevel(): int
+    public function getMaxConcurrencyLevel(): int
     {
-        return $this->getValue(['parameters', 'max_concurency_level']);
+        return $this->getValue(['parameters', 'max_concurrency_level']);
     }
 
     public function getWarehouseSize(): string
