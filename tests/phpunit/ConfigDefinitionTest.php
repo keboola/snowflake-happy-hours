@@ -46,10 +46,10 @@ class ConfigDefinitionTest extends TestCase
             'too-small-max-count' => [
                 ['max_cluster_count' => 1],
             ],
-            'too-low-concurency-level' => [
+            'too-low-concurrency-level' => [
                 ['max_concurency_level' => 2],
             ],
-            'too-large-concurency-level' => [
+            'too-large-concurrency-level' => [
                 ['max_concurency_level' => 15],
             ],
             'no-user' => [
@@ -72,7 +72,7 @@ class ConfigDefinitionTest extends TestCase
                 'warehouse_size' => 'SMALL',
                 'min_cluster_count' => 1,
                 'max_cluster_count' => 4,
-                'max_concurency_level' => 5,
+                'max_concurrency_level' => 5,
                 'user' => 'user',
                 '#password' => 'pass',
                 'host' => 'https://host.com',

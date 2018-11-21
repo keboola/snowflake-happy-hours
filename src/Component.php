@@ -26,13 +26,7 @@ class Component extends BaseComponent
                 $e
             );
         }
-        $command = new AlterWarehouseCommand(
-            $config->getWarehouse(),
-            $config->getMinClusterCount(),
-            $config->getMaxClusterCount(),
-            $config->getMaxConcurencyLevel(),
-            $config->getWarehouseSize()
-        );
+        $command = new AlterWarehouseCommand($config);
 
         $this->getLogger()->info(sprintf("Running query %s", $command->getSQL()));
         $connection->query($command->getSQL());

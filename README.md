@@ -15,7 +15,7 @@ Basic configuration:
         "warehouse": "YOUR_WAREHOUSE",
         "min_cluster_count": 1,
         "max_cluster_count": 4,
-        "max_concurency_level": 8,
+        "max_concurrency_level": 8,
         "warehouse_size": "SMALL"
 }
 ```
@@ -25,7 +25,7 @@ Basic configuration:
  - warehouse (string) - name of affected warehouse
  - min_cluster_count (int) - value <= 2
  - max_cluster_count (int) - value >= 3
- - max_concurency_level (int) - value from interval <4, 12>
+ - max_concurrency_level (int) - value from interval <4, 12>
  - warehouse_size (string) - enum ["SMALL"|"MEDIUM"|"LARGE"]
 
 ## Development
