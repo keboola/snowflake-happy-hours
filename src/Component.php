@@ -16,7 +16,7 @@ class Component extends BaseComponent
     {
         /** @var Config $config */
         $config = $this->getConfig();
-        $this->getLogger()->info(sprintf("Connecting to host %s", $config->getHost()));
+        $this->getLogger()->info(sprintf('Connecting to host %s', $config->getHost()));
         try {
             $connection = new SnowflakeConnection($config->getConnectionConfig());
         } catch (DbException $e) {
@@ -28,9 +28,9 @@ class Component extends BaseComponent
         }
         $command = new AlterWarehouseCommand($config);
 
-        $this->getLogger()->info(sprintf("Running query %s", $command->getSQL()));
+        $this->getLogger()->info(sprintf('Running query %s', $command->getSQL()));
         $connection->query($command->getSQL());
-        $this->getLogger()->info(sprintf("Done"));
+        $this->getLogger()->info(sprintf('Done'));
     }
 
     protected function getConfigClass(): string

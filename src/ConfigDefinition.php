@@ -10,7 +10,7 @@ use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 class ConfigDefinition extends BaseConfigDefinition
 {
 
-    private const POSSIBLE_WAREHOUSE_SIZES = ["SMALL", "MEDIUM", "LARGE"];
+    private const POSSIBLE_WAREHOUSE_SIZES = ['SMALL', 'MEDIUM', 'LARGE'];
 
     protected function getParametersDefinition(): ArrayNodeDefinition
     {
@@ -29,8 +29,8 @@ class ConfigDefinition extends BaseConfigDefinition
                         ->ifNotInArray(self::POSSIBLE_WAREHOUSE_SIZES)
                         ->thenInvalid(
                             sprintf(
-                                "Size must be one of %s",
-                                implode(",", self::POSSIBLE_WAREHOUSE_SIZES)
+                                'Size must be one of %s',
+                                implode(',', self::POSSIBLE_WAREHOUSE_SIZES)
                             )
                         )
                     ->end()

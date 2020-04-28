@@ -8,7 +8,7 @@
         "php-parallel-lint/php-parallel-lint": "^1.0",
         "keboola/coding-standard": "^9.0",
         "keboola/php-temp": "^2.0",
-        "phpstan/phpstan-shim": "^0.12.0",
+        "phpstan/phpstan": "^0.12.0",
         "phpunit/phpunit": "^9.0",
         "symfony/process": "^5.0",
         "keboola/datadir-tests": "^5.0"
