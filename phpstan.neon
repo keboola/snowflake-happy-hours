@@ -1,3 +1,5 @@
 parameters:
     checkMissingIterableValueType: false
     ignoreErrors:
+        - '#Parameter \#1 \$object of function get_class expects object, Throwable\|null given.#'
+        - '#Cannot call method scalarNode\(\) on Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface\|null.#'
