@@ -1,4 +1,4 @@
-# my-component
+# Snowflake Happy hours
 
 [![Build Status](https://travis-ci.com/keboola/snowflake-happy-hours.svg?branch=master)](https://travis-ci.com/keboola/my-component)
 

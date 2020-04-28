@@ -1,13 +1,10 @@
-FROM quay.io/keboola/aws-cli
-ARG AWS_SECRET_ACCESS_KEY
-ARG AWS_ACCESS_KEY_ID
-RUN /usr/bin/aws s3 cp s3://keboola-drivers/snowflake/snowflake-odbc-2.16.10.x86_64.deb /code/docker/snowflake-odbc.deb
-
 FROM php:7-cli
 
-ARG COMPOSER_FLAGS="--prefer-dist --no-interaction"
+ARG SNOWFLAKE_ODBC_VERSION=2.19.16
+ARG SNOWFLAKE_GPG_KEY=EC218558EABB25A1
+ARG COMPOSER_FLAGS="--prefer-dist --no-interaction --classmap-authoritative --no-scripts"
+#https://github.com/moby/moby/issues/4032#issuecomment-192327844
 ARG DEBIAN_FRONTEND=noninteractive
-ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_PROCESS_TIMEOUT 3600
 
 WORKDIR /code/
@@ -16,15 +13,20 @@ COPY docker/php-prod.ini /usr/local/etc/php/php.ini
 COPY docker/composer-install.sh /tmp/composer-install.sh
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
+        dirmngr \
+        debsig-verify \
         git \
-        unzip \
-        unixodbc-dev \
-        unixodbc \
+        gnupg \
         libpq-dev \
+        unixodbc \
+        unixodbc-dev \
+        unzip \
 	&& rm -r /var/lib/apt/lists/* \
 	&& chmod +x /tmp/composer-install.sh \
 	&& /tmp/composer-install.sh
 
+# Snowflake ODBC
+# https://github.com/docker-library/php/issues/103#issuecomment-353674490
 RUN set -ex; \
     docker-php-source extract; \
     { \
@@ -38,10 +40,21 @@ RUN set -ex; \
     docker-php-ext-install odbc; \
     docker-php-source delete
 
-COPY --from=0 /code/docker/snowflake-odbc.deb /tmp/snowflake-odbc.deb
-RUN dpkg -i /tmp/snowflake-odbc.deb
-ADD ./docker/simba.snowflake.ini /usr/lib/snowflake/odbc/lib/simba.snowflake.ini
+## install snowflake drivers
+ADD ./docker/snowflake/generic.pol /etc/debsig/policies/$SNOWFLAKE_GPG_KEY/generic.pol
+#ADD https://sfc-repo.snowflakecomputing.com/odbc/linux/$SNOWFLAKE_ODBC_VERSION/snowflake-odbc-$SNOWFLAKE_ODBC_VERSION.x86_64.deb /tmp/snowflake-odbc.deb
+ADD https://sfc-repo.azure.snowflakecomputing.com/odbc/linux/$SNOWFLAKE_ODBC_VERSION/snowflake-odbc-$SNOWFLAKE_ODBC_VERSION.x86_64.deb /tmp/snowflake-odbc.deb
+ADD ./docker/snowflake/simba.snowflake.ini /usr/lib/snowflake/odbc/lib/simba.snowflake.ini
 
+RUN mkdir -p ~/.gnupg \
+    && chmod 700 ~/.gnupg \
+    && echo "disable-ipv6" >> ~/.gnupg/dirmngr.conf \
+    && mkdir -p /usr/share/debsig/keyrings/$SNOWFLAKE_GPG_KEY \
+    && gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys $SNOWFLAKE_GPG_KEY \
+    && gpg --export $SNOWFLAKE_GPG_KEY > /usr/share/debsig/keyrings/$SNOWFLAKE_GPG_KEY/debsig.gpg \
+    && debsig-verify /tmp/snowflake-odbc.deb \
+    && gpg --batch --delete-key --yes $SNOWFLAKE_GPG_KEY \
+    && dpkg -i /tmp/snowflake-odbc.deb
 
 ## Composer - deps always cached unless changed
 # First copy only composer files
