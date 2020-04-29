@@ -26,10 +26,10 @@ class Component extends BaseComponent
                 $e
             );
         }
-        $command = new AlterWarehouseCommand($config);
+        $command = new AlterWarehouseCommand($config, $connection, $this->getLogger(), 40);
 
         $this->getLogger()->info(sprintf('Running query %s', $command->getSQL()));
-        $connection->query($command->getSQL());
+        $command->executeAlter();
         $this->getLogger()->info(sprintf('Done'));
     }
 
