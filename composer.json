@@ -2,7 +2,8 @@
     "require": {
         "php": "^7.3",
         "keboola/php-component": "^8.0",
-        "keboola/php-csv-db-import": "^5.1"
+        "keboola/php-csv-db-import": "^5.1",
+        "keboola/retry": "^0.5.0"
     },
     "require-dev": {
         "php-parallel-lint/php-parallel-lint": "^1.0",
