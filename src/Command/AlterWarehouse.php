@@ -53,7 +53,7 @@ MAX_CONCURRENCY_LEVEL = %s;",
     public function executeAlter(): void
     {
         $retryPolicy = new SimpleRetryPolicy($this->retryAttempts);
-        $backOffPolicy = new ExponentialBackOffPolicy();
+        $backOffPolicy = new ExponentialBackOffPolicy(10000);
 
         $proxy = new RetryProxy($retryPolicy, $backOffPolicy, $this->logger);
         $proxy->call(function (): void {
