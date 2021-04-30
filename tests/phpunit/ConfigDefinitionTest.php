@@ -44,7 +44,7 @@ class ConfigDefinitionTest extends TestCase
                 ['min_cluster_count' => 50],
             ],
             'too-small-max-count' => [
-                ['max_cluster_count' => 1],
+                ['max_cluster_count' => 0],
             ],
             'too-low-concurrency-level' => [
                 ['max_concurency_level' => 2],
