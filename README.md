@@ -6,6 +6,23 @@ Component for switching Snowflake's warehouse performance.
 
 # Usage
 
+
+## Snowflake configuration
+Following queries will create user with modify permissions for one warehouse named `KEBOOLA`:
+````
+CREATE ROLE KEBOOLA_HAPPY_HOUR;
+
+GRANT MODIFY ON WAREHOUSE KEBOOLA TO ROLE KEBOOLA_HAPPY_HOUR;
+
+CREATE USER KEBOOLA_HAPPY_HOUR
+ PASSWORD = ''
+ DEFAULT_ROLE = KEBOOLA_HAPPY_HOUR
+ ;
+ 
+GRANT ROLE KEBOOLA_HAPPY_HOUR TO USER KEBOOLA_HAPPY_HOUR;
+```
+
+## Configuration
 Basic configuration:
 ```
 {
@@ -20,13 +37,14 @@ Basic configuration:
 }
 ```
  - host (string) - hostname of your snowflake warehouse
- - user (string) - user with privilege to ALTER WAREHOUSE
+ - user (string) - user with MODIFY warehouse permission
  - \#password (string) - user's password
  - warehouse (string) - name of affected warehouse
  - min_cluster_count (int) - value <= 2
  - max_cluster_count (int) - value >= 3
  - max_concurrency_level (int) - value from interval <4, 12>
  - warehouse_size (string) - enum ["SMALL"|"MEDIUM"|"LARGE"]
+
 
 ## Development
  
