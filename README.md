@@ -20,7 +20,6 @@ Basic configuration:
 
  - `host` (string) - hostname of your Snowflake warehouse
  - `user` (string) - user with privilege to `ALTER WAREHOUSE`
-   - e.g., for role: `GRANT MODIFY ON WAREHOUSE "YOUR_WAREHOUSE" TO ROLE "ROLE_NAME";`
  - `#password` (string) - user's password
  - `warehouse` (string) - name of warehouse to update
  - `min_cluster_count` (int) - min number of clusters
@@ -29,6 +28,23 @@ Basic configuration:
  - `warehouse_size` (string) - warehouse size
 
 Check [ConfigDefinition.php](/src/ConfigDefinition.php) for available values and ranges.
+
+### Snowflake configuration
+
+Following queries will create user with modify permissions for one warehouse named `KEBOOLA`:
+
+```sql
+CREATE ROLE KEBOOLA_HAPPY_HOUR;
+
+GRANT MODIFY ON WAREHOUSE KEBOOLA TO ROLE KEBOOLA_HAPPY_HOUR;
+
+CREATE USER KEBOOLA_HAPPY_HOUR
+ PASSWORD = ''
+ DEFAULT_ROLE = KEBOOLA_HAPPY_HOUR
+ ;
+ 
+GRANT ROLE KEBOOLA_HAPPY_HOUR TO USER KEBOOLA_HAPPY_HOUR;
+```
 
 ## Development
  
