@@ -7,9 +7,10 @@ Component for switching Snowflake's warehouse performance.
 # Usage
 
 
-## Snowflake configuration
+## Snowflake configuration
+
 Following queries will create user with modify permissions for one warehouse named `KEBOOLA`:
-````
+```
 CREATE ROLE KEBOOLA_HAPPY_HOUR;
 
 GRANT MODIFY ON WAREHOUSE KEBOOLA TO ROLE KEBOOLA_HAPPY_HOUR;
