@@ -67,3 +67,6 @@ docker-compose run --rm dev composer tests
 - [MAX_CONCURRENCY_LEVEL](https://docs.snowflake.com/en/sql-reference/parameters#label-max-concurrency-level)
 - [SHOW WAREHOUSES](https://docs.snowflake.com/en/sql-reference/sql/show-warehouses)
 
+## License
+
+See [LICENSE](./LICENSE) file.
