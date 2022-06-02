@@ -1,7 +1,7 @@
 FROM php:7-cli
 
-ARG SNOWFLAKE_ODBC_VERSION=2.19.16
-ARG SNOWFLAKE_GPG_KEY=EC218558EABB25A1
+ARG SNOWFLAKE_ODBC_VERSION=2.22.5
+ARG SNOWFLAKE_GPG_KEY=37C7086698CB005C
 ARG COMPOSER_FLAGS="--prefer-dist --no-interaction --classmap-authoritative --no-scripts"
 #https://github.com/moby/moby/issues/4032#issuecomment-192327844
 ARG DEBIAN_FRONTEND=noninteractive
