@@ -1,6 +1,8 @@
 version: '2'
 services:
   dev:
+    build:
+      context: .
     volumes:
       - ./:/code
       - ./data:/data
