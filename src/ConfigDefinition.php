@@ -9,8 +9,14 @@ use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 
 class ConfigDefinition extends BaseConfigDefinition
 {
-
-    private const POSSIBLE_WAREHOUSE_SIZES = ['XSMALL', 'SMALL', 'MEDIUM', 'LARGE'];
+    private const POSSIBLE_WAREHOUSE_SIZES = [
+        'XSMALL',
+        'SMALL',
+        'MEDIUM',
+        'LARGE',
+        'XLARGE',
+        'XXLARGE',
+    ];
 
     protected function getParametersDefinition(): ArrayNodeDefinition
     {
