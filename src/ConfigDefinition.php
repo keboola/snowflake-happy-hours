@@ -9,8 +9,14 @@ use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 
 class ConfigDefinition extends BaseConfigDefinition
 {
-
-    private const POSSIBLE_WAREHOUSE_SIZES = ['XSMALL', 'SMALL', 'MEDIUM', 'LARGE'];
+    private const POSSIBLE_WAREHOUSE_SIZES = [
+        'XSMALL',
+        'SMALL',
+        'MEDIUM',
+        'LARGE',
+        'XLARGE',
+        'XXLARGE',
+    ];
 
     protected function getParametersDefinition(): ArrayNodeDefinition
     {
@@ -37,15 +43,18 @@ class ConfigDefinition extends BaseConfigDefinition
                 ->end()
                 ->integerNode('min_cluster_count')
                     ->isRequired()
-                    ->max(2)
+                    ->min(1)
+                    ->max(15)
                 ->end()
                 ->integerNode('max_cluster_count')
                     ->isRequired()
                     ->min(1)
+                    ->max(15)
                 ->end()
                 ->integerNode('max_concurrency_level')
                     ->isRequired()
-                    ->min(4)->max(12)
+                    ->min(1)
+                    ->max(15)
                 ->end()
                 ->scalarNode('user')
                     ->isRequired()
