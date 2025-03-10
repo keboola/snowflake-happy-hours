@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Keboola\SnowflakeHappyHours\Command;
 
-use Keboola\Db\Import\Snowflake\Connection;
+use Keboola\SnowflakeDbAdapter\Connection;
 use Keboola\SnowflakeHappyHours\Config;
 use Psr\Log\LoggerInterface;
 use Retry\BackOff\ExponentialBackOffPolicy;
@@ -13,17 +13,13 @@ use Retry\RetryProxy;
 
 class AlterWarehouse
 {
-    /** @var Config */
-    private $config;
+    private Config $config;
 
-    /** @var Connection*/
-    private $connection;
+    private Connection $connection;
 
-    /** @var LoggerInterface */
-    private $logger;
+    private LoggerInterface $logger;
 
-    /** @var int */
-    private $retryAttempts;
+    private int $retryAttempts;
 
 
     public function __construct(Config $config, Connection $connection, LoggerInterface $logger, int $attempts)
@@ -46,7 +42,7 @@ MAX_CONCURRENCY_LEVEL = %s;",
             $this->config->getWarehouseSize(),
             $this->config->getMinClusterCount(),
             $this->config->getMaxClusterCount(),
-            $this->config->getMaxConcurrencyLevel()
+            $this->config->getMaxConcurrencyLevel(),
         );
     }
 

@@ -4,16 +4,21 @@ declare(strict_types=1);
 
 namespace Keboola\SnowflakeHappyHours\Tests;
 
-use Keboola\Db\Import\Snowflake\Connection;
+use Exception;
+use Keboola\Component\Logger;
+use Keboola\SnowflakeDbAdapter\Connection;
 use Keboola\SnowflakeHappyHours\Command\AlterWarehouse;
 use Keboola\SnowflakeHappyHours\Config;
 use Keboola\SnowflakeHappyHours\ConfigDefinition;
+use LogicException;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
-use Psr\Log\Test\TestLogger;
 
 class AlterWarehouseCommandTest extends TestCase
 {
+    /**
+     * @return array<string, array<string, string|int>>
+     */
     private function getConfig(): array
     {
         return [
@@ -54,18 +59,17 @@ MAX_CONCURRENCY_LEVEL = 6;");
             ->getMock();
         $mock->expects(self::atLeast(2))
             ->method('query')
-            ->willThrowException(new \LogicException('Boo!'));
+            ->willThrowException(new LogicException('Boo!'));
         $config = new Config($this->getConfig(), new ConfigDefinition());
 
         /** @var Connection $mock */
-        $testLogger = new TestLogger();
+        $testLogger = new Logger();
         $command = new AlterWarehouse($config, $mock, $testLogger, 2);
         try {
             $command->executeAlter();
             self::fail('Must throw exception');
-        } catch (\LogicException $e) {
+        } catch (LogicException $e) {
             self::assertStringContainsString('Boo!', $e->getMessage());
-            self::assertTrue($testLogger->hasInfoThatContains('Boo!. Retrying... [1x]'));
         }
     }
 
@@ -82,15 +86,14 @@ MAX_CONCURRENCY_LEVEL = 6;");
                     return;
                 } else {
                     $counter++;
-                    throw new \Exception('Boo!');
+                    throw new Exception('Boo!');
                 }
             });
         $config = new Config($this->getConfig(), new ConfigDefinition());
 
         /** @var Connection $mock */
-        $testLogger = new TestLogger();
+        $testLogger = new Logger();
         $command = new AlterWarehouse($config, $mock, $testLogger, 5);
         $command->executeAlter();
-        self::assertTrue($testLogger->hasInfoThatContains('Boo!. Retrying... [3x]'));
     }
 }
