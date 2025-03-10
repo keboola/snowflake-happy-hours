@@ -13,11 +13,17 @@ class Config extends BaseConfig
      */
     public function getConnectionConfig(): array
     {
-        return [
+        $options = [
             'host' => $this->getValue(['parameters', 'host']),
             'user' => $this->getValue(['parameters', 'user']),
-            'password' => $this->getValue(['parameters', '#password']),
+            'password' => $this->getValue(['parameters', '#password'], ''),
         ];
+
+        if ($this->hasKeyPair()) {
+            $options['keyPair'] = $this->getValue(['parameters', '#keyPair']);
+        }
+
+        return $options;
     }
 
     public function getHost(): string
@@ -48,5 +54,10 @@ class Config extends BaseConfig
     public function getWarehouseSize(): string
     {
         return $this->getValue(['parameters', 'warehouse_size']);
+    }
+
+    public function hasKeyPair(): bool
+    {
+        return !empty($this->getValue(['parameters', '#keyPair'], ''));
     }
 }
