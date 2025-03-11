@@ -14,13 +14,13 @@ class Config extends BaseConfig
     public function getConnectionConfig(): array
     {
         $options = [
-            'host' => $this->getValue(['parameters', 'host']),
-            'user' => $this->getValue(['parameters', 'user']),
-            'password' => $this->getValue(['parameters', '#password'], ''),
+            'host' => $this->getStringValue(['parameters', 'host']),
+            'user' => $this->getStringValue(['parameters', 'user']),
+            'password' => $this->getStringValue(['parameters', '#password'], ''),
         ];
 
         if ($this->hasKeyPair()) {
-            $options['keyPair'] = $this->getValue(['parameters', '#keyPair']);
+            $options['keyPair'] = $this->getStringValue(['parameters', '#keyPair']);
         }
 
         return $options;
@@ -28,32 +28,32 @@ class Config extends BaseConfig
 
     public function getHost(): string
     {
-        return $this->getValue(['parameters', 'host']);
+        return $this->getStringValue(['parameters', 'host']);
     }
 
     public function getWarehouse(): string
     {
-        return $this->getValue(['parameters', 'warehouse']);
+        return $this->getStringValue(['parameters', 'warehouse']);
     }
 
     public function getMinClusterCount(): int
     {
-        return $this->getValue(['parameters', 'min_cluster_count']);
+        return $this->getIntValue(['parameters', 'min_cluster_count']);
     }
 
     public function getMaxClusterCount(): int
     {
-        return $this->getValue(['parameters', 'max_cluster_count']);
+        return $this->getIntValue(['parameters', 'max_cluster_count']);
     }
 
     public function getMaxConcurrencyLevel(): int
     {
-        return $this->getValue(['parameters', 'max_concurrency_level']);
+        return $this->getIntValue(['parameters', 'max_concurrency_level']);
     }
 
     public function getWarehouseSize(): string
     {
-        return $this->getValue(['parameters', 'warehouse_size']);
+        return $this->getStringValue(['parameters', 'warehouse_size']);
     }
 
     public function hasKeyPair(): bool
