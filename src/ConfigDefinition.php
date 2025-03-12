@@ -36,8 +36,8 @@ class ConfigDefinition extends BaseConfigDefinition
                         ->thenInvalid(
                             sprintf(
                                 'Size must be one of %s',
-                                implode(',', self::POSSIBLE_WAREHOUSE_SIZES)
-                            )
+                                implode(',', self::POSSIBLE_WAREHOUSE_SIZES),
+                            ),
                         )
                     ->end()
                 ->end()
@@ -61,8 +61,8 @@ class ConfigDefinition extends BaseConfigDefinition
                     ->cannotBeEmpty()
                 ->end()
                 ->scalarNode('#password')
-                    ->isRequired()
-                    ->cannotBeEmpty()
+                ->end()
+                ->scalarNode('#keyPair')
                 ->end()
                 ->scalarNode('host')
                     ->isRequired()

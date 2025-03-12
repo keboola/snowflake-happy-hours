@@ -7,7 +7,8 @@ namespace Keboola\SnowflakeHappyHours;
 use Keboola\Component\BaseComponent;
 use Keboola\Component\UserException;
 use Keboola\Db\Import\Exception as DbException;
-use Keboola\Db\Import\Snowflake\Connection as SnowflakeConnection;
+use Keboola\SnowflakeDbAdapter\Connection as SnowflakeConnection;
+use Keboola\SnowflakeDbAdapter\Exception\SnowflakeDbAdapterException;
 use Keboola\SnowflakeHappyHours\Command\AlterWarehouse as AlterWarehouseCommand;
 
 class Component extends BaseComponent
@@ -19,11 +20,11 @@ class Component extends BaseComponent
         $this->getLogger()->info(sprintf('Connecting to host %s', $config->getHost()));
         try {
             $connection = new SnowflakeConnection($config->getConnectionConfig());
-        } catch (DbException $e) {
+        } catch (SnowflakeDbAdapterException $e) {
             throw new UserException(
                 'Cannot connect to snowflake. Please check your credentials',
                 $e->getCode(),
-                $e
+                $e,
             );
         }
         $command = new AlterWarehouseCommand($config, $connection, $this->getLogger(), 40);

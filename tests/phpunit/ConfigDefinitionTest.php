@@ -20,6 +20,7 @@ class ConfigDefinitionTest extends TestCase
 
     /**
      * @dataProvider invalidParametersProvider
+     * @param array<string, array<string, int|string>> $invalidPart
      */
     public function testInvalidConfig(array $invalidPart): void
     {
@@ -28,6 +29,9 @@ class ConfigDefinitionTest extends TestCase
         (new Config(['parameters' => $params], new ConfigDefinition()));
     }
 
+    /**
+     * @return array<string, array<array<string, int|string>>>
+     */
     public function invalidParametersProvider(): array
     {
         return [
@@ -64,6 +68,9 @@ class ConfigDefinitionTest extends TestCase
         ];
     }
 
+    /**
+     * @return array<string, array<string, int|string>>
+     */
     private function provideValidConfig(): array
     {
         return [
