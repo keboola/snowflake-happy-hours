@@ -1,7 +1,7 @@
-FROM php:8.1-cli-buster
+FROM php:8.4-cli-bullseye
 
-ARG SNOWFLAKE_ODBC_VERSION=3.5.0
-ARG SNOWFLAKE_GPG_KEY=5A125630709DD64B
+ARG SNOWFLAKE_ODBC_VERSION=3.7.0
+ARG SNOWFLAKE_GPG_KEY=2A3149C82551A34A
 ARG COMPOSER_FLAGS="--prefer-dist --no-interaction --classmap-authoritative --no-scripts"
 #https://github.com/moby/moby/issues/4032#issuecomment-192327844
 ARG DEBIAN_FRONTEND=noninteractive

@@ -19,8 +19,8 @@ class Config extends BaseConfig
             'password' => $this->getStringValue(['parameters', '#password'], ''),
         ];
 
-        if ($this->hasKeyPair()) {
-            $options['keyPair'] = $this->getStringValue(['parameters', '#keyPair']);
+        if ($this->hasPrivateKey()) {
+            $options['privateKey'] = $this->getStringValue(['parameters', '#privateKey']);
         }
 
         return $options;
@@ -56,8 +56,8 @@ class Config extends BaseConfig
         return $this->getStringValue(['parameters', 'warehouse_size']);
     }
 
-    public function hasKeyPair(): bool
+    public function hasPrivateKey(): bool
     {
-        return !empty($this->getValue(['parameters', '#keyPair'], ''));
+        return !empty($this->getValue(['parameters', '#privateKey'], ''));
     }
 }
