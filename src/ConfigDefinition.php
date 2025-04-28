@@ -62,7 +62,7 @@ class ConfigDefinition extends BaseConfigDefinition
                 ->end()
                 ->scalarNode('#password')
                 ->end()
-                ->scalarNode('#keyPair')
+                ->scalarNode('#privateKey')
                 ->end()
                 ->scalarNode('host')
                     ->isRequired()

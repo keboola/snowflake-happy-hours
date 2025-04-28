@@ -1,7 +1,7 @@
 {
     "require": {
         "php": "^8.1",
-        "keboola/db-adapter-snowflake": "^1.5",
+        "keboola/db-adapter-snowflake": "dev-marek-CT-2100-keypair-to-privatekey",
         "keboola/php-component": "^10.0",
         "keboola/retry": "^0.5.0"
     },
