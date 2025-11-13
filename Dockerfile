@@ -1,6 +1,6 @@
-FROM php:8.4-cli-bullseye
+FROM php:8.4-cli-trixie
 
-ARG SNOWFLAKE_ODBC_VERSION=3.7.0
+ARG SNOWFLAKE_ODBC_VERSION=3.10.0
 ARG SNOWFLAKE_GPG_KEY=2A3149C82551A34A
 ARG COMPOSER_FLAGS="--prefer-dist --no-interaction --classmap-authoritative --no-scripts"
 #https://github.com/moby/moby/issues/4032#issuecomment-192327844
@@ -42,7 +42,7 @@ RUN set -ex; \
 
 ## install snowflake drivers
 COPY ./docker/snowflake/generic.pol /etc/debsig/policies/$SNOWFLAKE_GPG_KEY/generic.pol
-ADD https://sfc-repo.azure.snowflakecomputing.com/odbc/linux/$SNOWFLAKE_ODBC_VERSION/snowflake-odbc-$SNOWFLAKE_ODBC_VERSION.x86_64.deb /tmp/snowflake-odbc.deb
+ADD https://sfc-repo.snowflakecomputing.com/odbc/linux/$SNOWFLAKE_ODBC_VERSION/snowflake-odbc-$SNOWFLAKE_ODBC_VERSION.x86_64.deb /tmp/snowflake-odbc.deb
 ADD ./docker/snowflake/simba.snowflake.ini /usr/lib/snowflake/odbc/lib/simba.snowflake.ini
 
 RUN mkdir -p ~/.gnupg \
@@ -59,6 +59,19 @@ RUN mkdir -p ~/.gnupg \
     && gpg --batch --delete-key --yes $SNOWFLAKE_GPG_KEY \
     && dpkg -i /tmp/snowflake-odbc.deb \
     && rm /tmp/snowflake-odbc.deb
+
+RUN cat <<EOF > /etc/odbcinst.ini
+[ODBC Drivers]
+SnowflakeDSIIDriver=Installed
+
+[SnowflakeDSIIDriver]
+APILevel=1
+ConnectFunctions=YYY
+Description=Snowflake DSII
+Driver=/usr/lib/snowflake/odbc/lib/libSnowflake.so
+DriverODBCVer=$SNOWFLAKE_ODBC_VERSION
+SQLLevel=1
+EOF
 
 ## Composer - deps always cached unless changed
 # First copy only composer files
